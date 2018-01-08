@@ -8,6 +8,13 @@ jobs:
             - setup_remote_docker
             - checkout
             - run:
+                name: install curl
+                command: apt-get update && apt-get install -y curl
+            - run:
+                name: install mysql client
+                command: apt-get update && apt-get install -y mysql-client
+
+            - run:
                 name: Install Docker client
                 command: |
                     set -x
@@ -15,19 +22,13 @@ jobs:
                     curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
                     tar -xz -C /tmp -f /tmp/docker-$VER.tgz
                     mv /tmp/docker/* /usr/bin
-            
+
             - run:
                 name: docker run mysql
                 command: docker run --name db circleci/mysql:5.7 -p3306:3306
             - run:
-                name: install wget
-                command: apt-get update && apt-get install -y wget
-            - run:
-                name: install mysql client
-                command: apt-get update && apt-get install -y mysql-client
-            - run:
                 name: install dockerize
-                command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+                command: curl -LO https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
                 environment:
                     DOCKERIZE_VERSION: v0.3.0
             # - run:

@@ -25,7 +25,7 @@ jobs:
 
             - run:
                 name: docker run mysql
-                command: docker run -d --name db -p3306:3306 circleci/mysql:5.7
+                command: docker run -d --name db  --env-file environments.txt -p3306:3306 circleci/mysql:5.7 --secure-file-priv=""
             - run:
                 name: install dockerize
                 command: curl -LO https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -36,10 +36,10 @@ jobs:
             #     command: dockerize -wait tcp://localhost:3306 -timeout 1m
             - run:
                 name: Connection test
-                command: mysql -h 127.0.0.1  -u root -e 'show databases'
+                command: mysql -h 127.0.0.1  -u root -proot -e 'show databases'
             - run:
                 name: Create db
-                command: mysql -h 127.0.0.1 -u root -e < create_db.sql
+                command: mysql -h 127.0.0.1 -u root -proot -e < create_db.sql
             # - run:
             #     name: load fixtures
             #     command: mysql -h 127.0.0.1 -u root sinatra -e '

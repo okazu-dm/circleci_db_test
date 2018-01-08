@@ -6,8 +6,5 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Greeting
-          command: echo Hello, world.
-      - run:
-          name: Print the Current Time
-          command: date
+          name: Connection test
+          command: mysql -h 127.0.0.1 -u root -e 'show tables'

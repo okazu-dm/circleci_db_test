@@ -1,0 +1,17 @@
+CREATE DATABASE IF NOT EXISTS sinatra charset utf8;
+
+USE sinatra;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    created_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY,
+    title VARCHAR(64) NOT NULL,
+    body VARCHAR(255) NOT NULL,
+    owner_user_id INTEGER NOT NULL,
+    created_at INTEGER NOT NULL
+);

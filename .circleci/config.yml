@@ -5,16 +5,17 @@ jobs:
             - image: debian
             # - image: circleci/mysql:5.7
         steps:
+            - setup_remote_docker
             - checkout
+            - run:
+                name: docker run mysql
+                command: docker run --name db circleci/mysql:5.7 -p3306:3306
             - run:
                 name: install wget
                 command: apt-get update && apt-get install -y wget
             - run:
                 name: install mysql client
                 command: apt-get update && apt-get install -y mysql-client
-            - run:
-                name: docker run mysql
-                command: docker run --name db circleci/mysql:5.7 -p3306:3306
             - run:
                 name: install dockerize
                 command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz

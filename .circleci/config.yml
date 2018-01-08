@@ -2,6 +2,7 @@ version: 2
 jobs:
     build:
         docker:
+            - image: debian
             - image: circleci/mysql:5.7
         steps:
             - checkout

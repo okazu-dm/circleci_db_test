@@ -2,7 +2,7 @@ version: 2
 jobs:
     build:
         docker:
-            - image: debian
+            # - image: debian
             - image: circleci/mysql:5.7
         steps:
             - checkout
@@ -20,3 +20,11 @@ jobs:
             - run:
                 name: Connection test
                 command: mysql -h 127.0.0.1 -u root -e 'show databases'
+            - run:
+                name: Create db
+                command: mysql -h 127.0.0.1 -u root -e < create_db.sql
+            - run:
+                name: load fixtures
+                command: mysql -h 127.0.0.1 -u root sinatra -e '
+                    LOAD DATA INFILE "100_0000_user.csv" INTO TABLE dummy.users
+                    FIELDS TERMINATED BY "," ENCLOSED BY "\""   LINES TERMINATED BY "\n";'

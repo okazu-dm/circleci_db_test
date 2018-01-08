@@ -19,4 +19,4 @@ jobs:
                     DOCKERIZE_VERSION: v0.3.0
             - run:
                 name: Connection test
-                command: mysql -h 127.0.0.1 -u root -e 'show tables'
+                command: mysql -h 127.0.0.1 -u root -e 'show databases'

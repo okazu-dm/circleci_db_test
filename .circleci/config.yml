@@ -2,8 +2,8 @@ version: 2
 jobs:
     build:
         docker:
-            # - image: debian
-            - image: circleci/mysql:5.7
+            - image: debian
+            # - image: circleci/mysql:5.7
         steps:
             - checkout
             - run:
@@ -12,6 +12,9 @@ jobs:
             - run:
                 name: install mysql client
                 command: apt-get update && apt-get install -y mysql-client
+            - run:
+                name: docker run mysql
+                command: docker run --name db circleci/mysql:5.7 -p3306:3306
             - run:
                 name: install dockerize
                 command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -26,8 +29,8 @@ jobs:
             - run:
                 name: Create db
                 command: mysql -h 127.0.0.1 -u root -e < create_db.sql
-            - run:
-                name: load fixtures
-                command: mysql -h 127.0.0.1 -u root sinatra -e '
-                    LOAD DATA INFILE "100_0000_user.csv" INTO TABLE dummy.users
-                    FIELDS TERMINATED BY "," ENCLOSED BY "\""   LINES TERMINATED BY "\n";'
+            # - run:
+            #     name: load fixtures
+            #     command: mysql -h 127.0.0.1 -u root sinatra -e '
+            #         LOAD DATA INFILE "100_0000_user.csv" INTO TABLE dummy.users
+            #         FIELDS TERMINATED BY "," ENCLOSED BY "\""   LINES TERMINATED BY "\n";'

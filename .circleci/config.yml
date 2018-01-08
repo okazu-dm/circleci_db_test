@@ -43,5 +43,5 @@ jobs:
             - run:
                 name: load fixtures
                 command: mysql -h 127.0.0.1 -u root sinatra -e '
-                    LOAD DATA LOCAL INFILE "100_0000_user.csv" INTO TABLE dummy.users
+                    LOAD DATA LOCAL INFILE "100_0000_user.csv" INTO TABLE sinatra.users
                     FIELDS TERMINATED BY "," ENCLOSED BY "\""   LINES TERMINATED BY "\n";'
